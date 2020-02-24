@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header><h1>Main Feed Page</h1></header>
+    {% for tweet in tweets %}
+    {{ tweet.body }}
+    <br>
+    <a href="/user_page/{{tweet.created_by.id}}">{{ tweet.created_by }} on {{ tweet.created_on }}</a>
+    {% endfor %}
+</body>
+</html>
