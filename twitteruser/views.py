@@ -14,11 +14,11 @@ def create_account_view(request):
         if form.is_valid():
             data = form.cleaned_data
             user = CustomUser.objects.create_user(
-                data['username'], 
-                data['password'],
-                data['email'],
-                data['first_name'],
-                data['age']
+                username=data['username'], 
+                first_name=data['first_name'],
+                email=data['email'],
+                age=data['age'],
+                password=data['password1']
             )
             login(request, user)
             return HttpResponseRedirect(reverse('home'))
@@ -38,3 +38,9 @@ def user_page(request, id):
     user = CustomUser.objects.get(id=id)
     tweet = Tweet.objects.filter(created_by=user)
     return render(request, html, {'user': user, 'tweets': tweet})
+
+
+def follow_view(request, id):
+    follow = CustomUser.objects.get(id=id)
+    request.user.username.followers.add(follow)
+    return HttpResponseRedirect(reverse('user_page'))

@@ -6,6 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <header><h1>User's Page</h1></header>
+    <header><h1 style="text-align: center;">{{user.username}}'s Page</h1></header>
+    <ul>
+        {% for tweet in tweets %}
+        <li>
+            {{tweet.body}} - {{tweet.created_on}}
+        </li>
+        {% endfor %}
+    </ul>
+    <button>
+        <a href="/follow/{{user.id}}/">
+            Follow
+        </a>
+    </button>
 </body>
 </html>

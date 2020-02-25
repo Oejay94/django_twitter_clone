@@ -6,6 +6,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     first_name = models.CharField(max_length=50)
+    followers = models.ManyToManyField('self', default=None, related_name='follow', blank=True, symmetrical=False)
 
     def __str__(self):
         return self.username
