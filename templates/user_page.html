@@ -1,23 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header><h1 style="text-align: center;">{{user.username}}'s Page</h1></header>
-    <ul>
-        {% for tweet in tweets %}
-        <li>
-            {{tweet.body}} - {{tweet.created_on}}
-        </li>
-        {% endfor %}
-    </ul>
-    <button>
-        <a href="/follow/{{user.id}}/">
-            Follow
-        </a>
-    </button>
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <header>
+            <h1 style="text-align: center;">{{ user.first_name }}'s Page</h1>
+        </header>
+        <br>
+        <button>
+            <a href="/home/">
+                Home
+            </a>
+        </button>
+        <button>
+            <a href="/post_tweet/">
+                Post a Tweet
+            </a>
+        </button>
+        <button>
+            <a href="/logout/">
+                Logout
+            </a>
+        </button>
+        <ul>
+            <header>
+                <h4>Tweets</h4>
+            </header>
+            {% for tweet in tweets %}
+            <li>
+                {{tweet.body}} - {{tweet.created_on}}
+            </li>
+            {% endfor %}
+        </ul>
+        Tweets - {{ tweets.count }}
+        <br>
+        <br>
+        <button>
+            <a href="/follow/{{user.id}}/">
+                Follow
+            </a>
+        </button>
+        <button>
+            <a href="/unfollow/{{user.id}}/">
+                Unfollow
+            </a>
+        </button>
+        Following: {{user.following_field.count}}
+    </body>
+
 </html>

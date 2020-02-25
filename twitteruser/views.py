@@ -42,5 +42,11 @@ def user_page(request, id):
 
 def follow_view(request, id):
     follow = CustomUser.objects.get(id=id)
-    request.user.username.followers.add(follow)
-    return HttpResponseRedirect(reverse('user_page'))
+    request.user.following_field.add(follow)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def unfollow_view(request, id):
+    unfollow = CustomUser.objects.get(id=id)
+    request.user.following_field.remove(unfollow)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

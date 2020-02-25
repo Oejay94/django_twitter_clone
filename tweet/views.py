@@ -20,3 +20,9 @@ def post_tweet_view(request):
         form = post_tweet()
     
     return render(request, html, {'post': form})
+
+
+def tweet_page(request):
+    html = 'tweet_page.html'
+    tweets = Tweet.objects.all()
+    return render(request, html, {'tweets': tweets})
