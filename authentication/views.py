@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 
 from .forms import login_form
+
 from twitteruser.models import CustomUser
 
 def login_view(request):

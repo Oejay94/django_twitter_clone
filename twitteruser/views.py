@@ -3,7 +3,9 @@ from django.contrib.auth import login
 
 from .forms import create_account
 from .models import CustomUser
+
 from tweet.models import Tweet
+from notification.models import Notification
 
 def create_account_view(request):
     html = 'create_account.html'
@@ -30,7 +32,9 @@ def create_account_view(request):
 def home_page(request):
     html = 'home.html'
     tweet = Tweet.objects.all()
-    return render(request, html, {'tweets': tweet})
+    user = CustomUser.objects.all()
+    notify = Notification.objects.filter(user=request.user)
+    return render(request, html, {'tweets': tweet, 'notify': notify})
 
 
 def user_page(request, id):

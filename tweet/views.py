@@ -1,8 +1,13 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+import re
 
 from .models import Tweet
 from .forms import post_tweet
+
+from notification.models import Notification
+from twitteruser.models import CustomUser
+
 
 def post_tweet_view(request):
     html = 'post_tweet.html'
@@ -11,14 +16,28 @@ def post_tweet_view(request):
         form = post_tweet(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            Tweet.objects.create(
+            add_tweet = Tweet.objects.create(
                 body=data['body'],
                 created_by=request.user
             )
+            # Peter Marsh helped with mentioning users in a tweet
+
+            # Check if @ sign is inside tweet
+            if '@' in data['body']:
+                # If it is then grab username that follows @ character
+                find_user = re.findall(r'@(\w+)', data['body'])
+                target_username = find_user[0]
+                # Get the instance of the twitter user based off of username
+                target_user = CustomUser.objects.get(username=target_username)
+
+                Notification.objects.create(
+                    user=target_user,
+                    tweet=add_tweet
+                )
             return HttpResponseRedirect(reverse('home'))
     else:
         form = post_tweet()
-    
+
     return render(request, html, {'post': form})
 
 
