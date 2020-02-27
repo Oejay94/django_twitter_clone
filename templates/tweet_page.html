@@ -6,8 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    {% for tweet in tweets %}
-    {{ tweet.body }} by {{ tweet.created_by }} at {{ tweet.created_on }}
-    {% endfor %}
+    {{ tweets.body }} by {{ tweets.created_by }} at {{ tweets.created_on }}
 </body>
 </html>

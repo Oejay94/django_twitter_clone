@@ -20,7 +20,7 @@
         <ul>
             {% for tweet in tweets %}
             <li>
-                <a href="/tweet_page/">{{ tweet.body }}</a> <br>
+                <a href="/tweet_page/{{tweet.id}}">{{ tweet.body }}</a> <br>
                 <a href="/user_page/{{tweet.created_by.id}}">{{ tweet.created_by }} on {{ tweet.created_on }}</a>
             </li>
             <br>

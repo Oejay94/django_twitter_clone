@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header>
-        <h1 style="text-align: center;">{{ user.first_name }}'s Notifications</h1>
-    </header>
-    <ul>
-    {% for note in notify %}
-    <li>You were mentioned in a Tweet by {{note.tweet.created_by}} at {{note.tweet.created_on}}</li>
-    {% endfor %}
-    </ul>
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <header>
+            <h1 style="text-align: center;">{{ user.first_name }}'s Notifications</h1>
+        </header>
+        <a href="/clear_notifications/">Remove Notifications</a>
+        {% for note in notify %}
+        <ul>
+            <li>You were mentioned in a Tweet by {{note.tweet.created_by}} at {{note.tweet.created_on}}</li>
+        </ul>
+        {% endfor %}
+    </body>
+
 </html>

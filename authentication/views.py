@@ -19,7 +19,7 @@ def login_view(request):
             )
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('home'))
+                return render(request, 'user_page.html')
     else:
         form = login_form()
 
@@ -28,4 +28,4 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(request.GET.get('next', '/'))
+    return HttpResponseRedirect(request.GET.get('next', '/login/'))

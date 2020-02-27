@@ -1,5 +1,6 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 from .forms import create_account
 from .models import CustomUser
@@ -23,18 +24,19 @@ def create_account_view(request):
                 password=data['password1']
             )
             login(request, user)
-            return HttpResponseRedirect(reverse('home'))
+            return render(request, 'user_page.html')
     else:
         form = create_account()
     return render(request, html, {'accounts': form})
 
-
+@login_required()
 def home_page(request):
     html = 'home.html'
-    tweet = Tweet.objects.all()
-    user = CustomUser.objects.all()
+    user = Tweet.objects.filter(created_by=request.user)
+    following_user = Tweet.objects.filter(created_by__in=request.user.following_field.all())
+    tweets = user | following_user
     notify = Notification.objects.filter(user=request.user)
-    return render(request, html, {'tweets': tweet, 'notify': notify})
+    return render(request, html, {'tweets': tweets, 'notify': notify})
 
 
 def user_page(request, id):

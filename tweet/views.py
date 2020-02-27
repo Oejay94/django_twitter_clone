@@ -41,7 +41,7 @@ def post_tweet_view(request):
     return render(request, html, {'post': form})
 
 
-def tweet_page(request):
+def tweet_page(request, id):
     html = 'tweet_page.html'
-    tweets = Tweet.objects.all()
+    tweets = Tweet.objects.get(id=id)
     return render(request, html, {'tweets': tweets})
