@@ -11,6 +11,12 @@
         <header>
             <h1 style="text-align: center;">{{ user.first_name }}'s Notifications</h1>
         </header>
+        <button><a href="/">Home</a></button>
+        <button><a href="/user_page/{{request.user.id}}">Profile Page</a></button>
+        <button><a href="/post_tweet/">Post a Tweet</a></button>
+        <button><a href="/logout/">Logout</a></button>
+        <br>
+        <br>
         <a href="/clear_notifications/">Remove Notifications</a>
         {% for note in notify %}
         <ul>

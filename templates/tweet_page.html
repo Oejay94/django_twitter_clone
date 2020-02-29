@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {{ tweets.body }} by {{ tweets.created_by }} at {{ tweets.created_on }}
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <button><a href="/">Home</a></button>
+        <button><a href="/post_tweet/">Post a Tweet</a></button>
+        <button><a href="/user_page/{{request.user.id}}">Profile Page</a></button>
+        <button><a href="/notifications/{{request.user.id}}">Notifications {{notify.count}}</a></button>
+        <button><a href="/logout/">Logout</a></button>
+        <br>
+        {{ tweets.body }} by {{ tweets.created_by }} at {{ tweets.created_on }}
+    </body>
+
 </html>
