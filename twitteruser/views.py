@@ -8,6 +8,7 @@ from .models import CustomUser
 from tweet.models import Tweet
 from notification.models import Notification
 
+
 def create_account_view(request):
     html = 'create_account.html'
 
@@ -17,7 +18,7 @@ def create_account_view(request):
         if form.is_valid():
             data = form.cleaned_data
             user = CustomUser.objects.create_user(
-                username=data['username'], 
+                username=data['username'],
                 first_name=data['first_name'],
                 email=data['email'],
                 age=data['age'],
@@ -29,11 +30,13 @@ def create_account_view(request):
         form = create_account()
     return render(request, html, {'accounts': form})
 
+
 @login_required()
 def home_page(request):
     html = 'home.html'
     user = Tweet.objects.filter(created_by=request.user)
-    following_user = Tweet.objects.filter(created_by__in=request.user.following_field.all())
+    following_user = Tweet.objects.filter(
+        created_by__in=request.user.following_field.all())
     tweets = user | following_user
     notify = Notification.objects.filter(user=request.user)
     return render(request, html, {'tweets': tweets, 'notify': notify})
