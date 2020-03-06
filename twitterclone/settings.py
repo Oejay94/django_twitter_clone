@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'twitteruser.apps.TwitteruserConfig',
+    'bootstrap4',
     'tweet.apps.TweetConfig',
     'notification.apps.NotificationConfig',
     'authentication.apps.AuthenticationConfig',
