@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.views import View
 
 from .forms import create_account
 from .models import CustomUser
@@ -9,10 +10,34 @@ from tweet.models import Tweet
 from notification.models import Notification
 
 
-def create_account_view(request):
-    html = 'create_account.html'
+# def create_account_view(request):
+#     html = 'create_account.html'
 
-    if request.method == 'POST':
+#     if request.method == 'POST':
+#         form = create_account(request.POST)
+
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             user = CustomUser.objects.create_user(
+#                 username=data['username'],
+#                 first_name=data['first_name'],
+#                 email=data['email'],
+#                 age=data['age'],
+#                 password=data['password1']
+#             )
+#             login(request, user)
+#             return render(request, 'user_page.html')
+#     else:
+#         form = create_account()
+#     return render(request, html, {'accounts': form})
+
+class CreateAccount(View):
+    def get(self, request):
+        html = 'create_account.html'
+        form = create_account()
+        return render(request, html, {'accounts': form})
+
+    def post(self, request):
         form = create_account(request.POST)
 
         if form.is_valid():
@@ -26,9 +51,6 @@ def create_account_view(request):
             )
             login(request, user)
             return render(request, 'user_page.html')
-    else:
-        form = create_account()
-    return render(request, html, {'accounts': form})
 
 
 @login_required()
