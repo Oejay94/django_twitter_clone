@@ -1,20 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 
-from .models import CustomUser
+from .models import TwitterUser
 
-class create_account(UserCreationForm):
-    class Meta:
-        model = CustomUser
-        fields = [
-            'username',
-            'first_name',
-            'email',
-            'age'
-        ]
-    
-    def __init__(self, *args, **kwargs):
-        super(create_account, self).__init__(*args, **kwargs)
-
-        for fieldname in ['password1', 'password2']:
-            self.fields[fieldname].help_text = None
+class create_account(forms.Form):
+    username = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=50)
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())

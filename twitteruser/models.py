@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-class CustomUser(AbstractUser):
+class TwitterUser(AbstractUser):
     username = models.CharField(max_length=50, unique=True, blank=True)
     email = models.EmailField(blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)

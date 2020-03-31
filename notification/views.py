@@ -3,16 +3,14 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Notification
 
-from twitteruser.models import CustomUser
+from twitteruser.models import TwitterUser
 
 @login_required()
 def notification_view(request, id):
     html = 'notify.html'
-    user = CustomUser.objects.get(id=id)
-    notify = Notification.objects.filter(user=user)
+    user = TwitterUser.objects.get(id=id)
+    notify = Notification.objects.filter(user=user, viewed=False)
+    for i in notify:
+        i.viewed = True
+        i.save()
     return render(request, html, {'notify': notify, 'users': user})
-
-@login_required()
-def clear_notify(request):
-    clear_note = Notification.objects.all().delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

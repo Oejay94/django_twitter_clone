@@ -7,7 +7,7 @@ from .models import Tweet
 from .forms import post_tweet
 
 from notification.models import Notification
-from twitteruser.models import CustomUser
+from twitteruser.models import TwitterUser
 
 
 # def post_tweet_view(request):
@@ -65,7 +65,7 @@ class PostTweet(View):
                 find_user = re.findall(r'@(\w+)', data['body'])
                 target_username = find_user[0]
                 # Get the instance of the twitter user based off of username
-                target_user = CustomUser.objects.get(username=target_username)
+                target_user = TwitterUser.objects.get(username=target_username)
 
                 Notification.objects.create(
                     user=target_user,
@@ -86,3 +86,12 @@ class TweetPage(View):
         html = 'tweet_page.html'
         tweets = Tweet.objects.get(id=id)
         return render(request, html, {'tweets': tweets})
+
+
+class DeleteTweet(View):
+
+    def get(self, request, id):
+        delete_tweet = Tweet.objects.get(id=id)
+        delete_tweet.delete()
+        return HttpResponseRedirect(reverse('home'))
+        

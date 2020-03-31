@@ -124,10 +124,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'twitteruser.CustomUser'
+AUTH_USER_MODEL = 'twitteruser.TwitterUser'
 
 LOGIN_URL = '/login/'
-
-LOGIN_REDIRECT_URL = 'user_page/<int:id>/'
 
 LOGOUT_REDIRECT_URL = '/login/'

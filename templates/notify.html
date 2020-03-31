@@ -17,10 +17,9 @@
         <button><a href="/logout/">Logout</a></button>
         <br>
         <br>
-        <a href="/clear_notifications/">Remove Notifications</a>
         {% for note in notify %}
         <ul>
-            <li>You were mentioned in a Tweet by {{note.tweet.created_by}} at {{note.tweet.created_on}}</li>
+            <li>You were mentioned in a <a href="/tweet_page/{{note.tweet.id}}">Tweet</a> by <a href="/user_page/{{note.tweet.created_by.id}}">{{note.tweet.created_by}}</a> at {{note.tweet.created_on}}</li>
         </ul>
         {% endfor %}
     </body>

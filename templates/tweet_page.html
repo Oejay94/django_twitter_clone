@@ -15,6 +15,9 @@
         <button><a href="/logout/">Logout</a></button>
         <br>
         {{ tweets.body }} by {{ tweets.created_by }} at {{ tweets.created_on }}
+        {% if request.user == tweets.created_by %}
+        <button><a href="/delete_tweet/{{tweets.id}}">Delete Tweet</a></button>
+        {% endif %}
     </body>
 
 </html>

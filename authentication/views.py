@@ -4,7 +4,7 @@ from django.views import View
 
 from .forms import login_form
 
-from twitteruser.models import CustomUser
+from twitteruser.models import TwitterUser
 
 # def login_view(request):
 #     html = 'main.html'
@@ -43,7 +43,7 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
-                return render(request, 'user_page.html')
+            return HttpResponseRedirect(request.GET.get('next', '/'))
 
 
 def logout_view(request):

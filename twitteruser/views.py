@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 
 from .forms import create_account
-from .models import CustomUser
+from .models import TwitterUser
 
 from tweet.models import Tweet
 from notification.models import Notification
@@ -42,15 +42,13 @@ class CreateAccount(View):
 
         if form.is_valid():
             data = form.cleaned_data
-            user = CustomUser.objects.create_user(
+            user = TwitterUser.objects.create(
                 username=data['username'],
                 first_name=data['first_name'],
-                email=data['email'],
-                age=data['age'],
                 password=data['password1']
             )
             login(request, user)
-            return render(request, 'user_page.html')
+        return render(request, 'user_page.html')
 
 
 @login_required()
@@ -60,24 +58,24 @@ def home_page(request):
     following_user = Tweet.objects.filter(
         created_by__in=request.user.following_field.all())
     tweets = user | following_user
-    notify = Notification.objects.filter(user=request.user)
+    notify = Notification.objects.filter(user=request.user, viewed=False)
     return render(request, html, {'tweets': tweets, 'notify': notify})
 
 
 def user_page(request, id):
     html = 'user_page.html'
-    user = CustomUser.objects.get(id=id)
+    user = TwitterUser.objects.get(id=id)
     tweet = Tweet.objects.filter(created_by=user)
     return render(request, html, {'user': user, 'tweets': tweet})
 
 
 def follow_view(request, id):
-    follow = CustomUser.objects.get(id=id)
+    follow = TwitterUser.objects.get(id=id)
     request.user.following_field.add(follow)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def unfollow_view(request, id):
-    unfollow = CustomUser.objects.get(id=id)
+    unfollow = TwitterUser.objects.get(id=id)
     request.user.following_field.remove(unfollow)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
